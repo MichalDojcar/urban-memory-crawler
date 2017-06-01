@@ -25,16 +25,12 @@ public class Crawler {
     }
 
     public List<String> crawl() throws IOException {
-        return processPage(url, depth);
-    }
-
-    private List<String> processPage(String url, int depth) throws IOException {
         if (depth == 0) return Collections.emptyList();
 
         List<String> result = new LinkedList<>();
         result.add(url);
         HtmlPage htmlPage = new HtmlPage(url, getContent(url));
-        for (String link : htmlPage.getLinks()){
+        for (String link : htmlPage.getLinks()) {
             Crawler crawler = fork(link, depth - 1);
             result.addAll(crawler.crawl());
         }
